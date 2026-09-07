@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>APHENAS Dashboard Preview</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f5f5;
+      color: #000000;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+
+    /* =========================
+       SIDEBAR
+    ========================== */
+
+    .sidebar {
+      width: 255px;
+      min-width: 255px;
+      height: 100vh;
+
+      background: #000000;
+      color: #ffffff;
+
+      border-right: 1px solid #222222;
+
+      display: flex;
+      flex-direction: column;
+
+      position: sticky;
+      top: 0;
+    }
+
+    .brand {
+      min-height: 86px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 20px;
+
+      border-bottom: 1px solid #222222;
+    }
+
+    .aphenas-logo {
+      width: 190px;
+      height: 60px;
+
+      object-fit: contain;
+      display: block;
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+
+      padding: 15px 10px;
+    }
+
+    .menu-section {
+      margin-bottom: 17px;
+    }
+
+    .section-title {
+      color: #777777;
+
+      font-size: 10px;
+      font-weight: 700;
+
+      letter-spacing: 1.2px;
+
+      padding: 0 12px;
+      margin-bottom: 7px;
+    }
+
+    .menu-item {
+      height: 43px;
+
+      display: flex;
+      align-items: center;
+
+      border-radius: 8px;
+
+      padding: 0 12px;
+
+      margin: 2px 0;
+
+      color: #b5b5b5;
+
+      font-size: 13px;
+      font-weight: 500;
+
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: #171717;
+      color: #ffffff;
+    }
+
+    .menu-item.active {
+      background: #ffffff;
+      color: #000000;
+
+      font-weight: 700;
+    }
+
+    .indicator {
+      width: 3px;
+      height: 21px;
+
+      flex-shrink: 0;
+
+      border-radius: 4px;
+
+      margin-right: 10px;
+
+      background: transparent;
+    }
+
+    .menu-item.active .indicator {
+      background: #000000;
+    }
+
+    .menu-icon {
+      width: 25px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-right: 8px;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      flex-shrink: 0;
+    }
+
+    .sidebar-bottom {
+      min-height: 70px;
+
+      border-top: 1px solid #222222;
+
+      padding: 0 20px;
+
+      display: flex;
+      align-items: center;
+    }
+
+    .secure-dot {
+      width: 9px;
+      height: 9px;
+
+      background: #ffffff;
+
+      border-radius: 50%;
+
+      margin-right: 10px;
+
+      flex-shrink: 0;
+    }
+
+    .secure-title {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .secure-subtitle {
+      color: #8a8a8a;
+
+      font-size: 10px;
+
+      margin-top: 2px;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .main {
+      flex: 1;
+      min-width: 0;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header {
+      min-height: 86px;
+
+      background: #ffffff;
+
+      border-bottom: 1px solid #e5e5e5;
+
+      padding: 0 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .header-subtitle {
+      margin-top: 4px;
+
+      color: #777777;
+
+      font-size: 12px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+
+      gap: 14px;
+    }
+
+    .secure-pill {
+      border: 1px solid #dadada;
+
+      border-radius: 20px;
+
+      padding: 7px 12px;
+
+      display: flex;
+      align-items: center;
+
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .secure-pill-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #000000;
+
+      margin-right: 7px;
+    }
+
+    .notification {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+
+      border: 1px solid #e0e0e0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 800;
+
+      position: relative;
+    }
+
+    .notification-badge {
+      position: absolute;
+
+      top: -5px;
+      right: -5px;
+
+      min-width: 18px;
+      height: 18px;
+
+      border-radius: 9px;
+
+      background: #000000;
+      color: #ffffff;
+
+      font-size: 9px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .divider {
+      width: 1px;
+      height: 36px;
+
+      background: #e5e5e5;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+
+      background: #000000;
+      color: #ffffff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 800;
+
+      margin-right: 10px;
+    }
+
+    .admin-name {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .admin-role {
+      margin-top: 2px;
+
+      color: #777777;
+
+      font-size: 10px;
+    }
+
+
+    /* =========================
+       CONTENT
+    ========================== */
+
+    .content {
+      padding: 24px;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 20px;
+    }
+
+
+    /* =========================
+       STAT CARDS
+    ========================== */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(180px, 1fr));
+
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+
+      border: 1px solid #e2e2e2;
+
+      border-radius: 12px;
+
+      padding: 18px;
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-title {
+      color: #686868;
+
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .stat-icon {
+      width: 30px;
+      height: 30px;
+
+      border-radius: 8px;
+
+      background: #f3f3f3;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #000000;
+    }
+
+    .stat-value {
+      margin-top: 13px;
+
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .stat-subtitle {
+      margin-top: 6px;
+
+      color: #8a8a8a;
+
+      font-size: 10px;
+    }
+
+
+    /* =========================
+       DASHBOARD CARDS
+    ========================== */
+
+    .three-column {
+      display: grid;
+
+      grid-template-columns:
+        1.3fr 1fr 1fr;
+
+      gap: 15px;
+    }
+
+    .card {
+      background: #ffffff;
+
+      border: 1px solid #e2e2e2;
+
+      border-radius: 12px;
+
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .card-subtitle {
+      margin-top: 4px;
+
+      color: #8a8a8a;
+
+      font-size: 10px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .view-all {
+      font-size: 10px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       CHART
+    ========================== */
+
+    .chart {
+      height: 190px;
+
+      margin-top: 20px;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .bar-group {
+      width: 13%;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 18px;
+
+      background: #000000;
+
+      border-radius: 4px 4px 0 0;
+    }
+
+    .day {
+      margin-top: 10px;
+      margin-bottom: 8px;
+
+      color: #777777;
+
+      font-size: 9px;
+    }
+
+
+    /* =========================
+       LISTS
+    ========================== */
+
+    .list {
+      margin-top: 18px;
+    }
+
+    .list-row {
+      display: flex;
+      align-items: center;
+
+      min-height: 62px;
+
+      padding: 11px 0;
+
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .list-row:last-child {
+      border-bottom: none;
+    }
+
+    .list-dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #000000;
+
+      margin-right: 12px;
+    }
+
+    .list-info {
+      flex: 1;
+    }
+
+    .list-title {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .list-description {
+      color: #777777;
+
+      font-size: 9px;
+
+      margin-top: 3px;
+    }
+
+    .list-time {
+      color: #999999;
+
+      font-size: 9px;
+    }
+
+
+    /* =========================
+       PASSWORD RESET
+    ========================== */
+
+    .reset-avatar {
+      width: 38px;
+      height: 38px;
+
+      background: #000000;
+      color: #ffffff;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 700;
+
+      margin-right: 12px;
+    }
+
+    .reset-actions {
+      display: flex;
+
+      gap: 8px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      height: 30px;
+
+      border: 1px solid #d6d6d6;
+
+      background: #ffffff;
+      color: #000000;
+
+      border-radius: 7px;
+
+      padding: 0 10px;
+
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .btn-black {
+      height: 30px;
+
+      border: none;
+
+      background: #000000;
+      color: #ffffff;
+
+      border-radius: 7px;
+
+      padding: 0 12px;
+
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+
+    /* =========================
+       SECURITY EVENTS
+    ========================== */
+
+    .security-icon {
+      width: 36px;
+      height: 36px;
+
+      border-radius: 50%;
+
+      background: #000000;
+      color: #ffffff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 800;
+
+      margin-right: 12px;
+    }
+
+    .status {
+      border: 1px solid #000000;
+
+      border-radius: 20px;
+
+      padding: 5px 10px;
+
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+
+    /* =========================
+       QUICK ACTIONS
+    ========================== */
+
+    .quick-actions {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(160px, 1fr));
+
+      gap: 12px;
+
+      margin-top: 18px;
+    }
+
+    .quick-action {
+      min-height: 58px;
+
+      border: 1px solid #dadada;
+
+      border-radius: 10px;
+
+      background: #ffffff;
+
+      padding: 12px 14px;
+
+      display: flex;
+      align-items: center;
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .quick-icon {
+      width: 32px;
+      height: 32px;
+
+      border-radius: 8px;
+
+      background: #000000;
+      color: #ffffff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 18px;
+
+      margin-right: 10px;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 1200px) {
+      .three-column {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-actions {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .profile-text {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="app">
+
+    <!-- ======================
+         SIDEBAR
+    ======================= -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        <img
+          src="./assets/images/aphenas-logo.png"
+          alt="APHENAS Logo"
+          class="aphenas-logo"
+        />
+      </div>
+
+
+      <div class="sidebar-menu">
+
+        <div class="menu-section">
+
+          <div class="menu-item active">
+            <div class="indicator"></div>
+            <span class="menu-icon">⌂</span>
+            Dashboard
+          </div>
+
+        </div>
+
+
+        <div class="menu-section">
+
+          <div class="section-title">
+            ADMINISTRATION
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">◉</span>
+            User Management
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">＋</span>
+            Create New User
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">♢</span>
+            Roles & Permissions
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">▦</span>
+            Units/Commands
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">▣</span>
+            Devices
+          </div>
+
+        </div>
+
+
+        <div class="menu-section">
+
+          <div class="section-title">
+            COMMUNICATION
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">✉</span>
+            Messages
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">⌁</span>
+            Signals
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">◉</span>
+            Broadcast
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">#</span>
+            Channels
+          </div>
+
+        </div>
+
+
+        <div class="menu-section">
+
+          <div class="section-title">
+            MONITORING
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">◌</span>
+            Activity Monitor
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">!</span>
+            Security Events
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">▤</span>
+            Analytics
+          </div>
+
+        </div>
+
+
+        <div class="menu-section">
+
+          <div class="section-title">
+            SYSTEM
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">≣</span>
+            Audit Logs
+          </div>
+
+          <div class="menu-item">
+            <div class="indicator"></div>
+            <span class="menu-icon">⚙</span>
+            System Settings
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="sidebar-bottom">
+
+        <div class="secure-dot"></div>
+
+        <div>
+          <div class="secure-title">
+            Secure Connection
+          </div>
+
+          <div class="secure-subtitle">
+            System protected
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ======================
+         MAIN DASHBOARD
+    ======================= -->
+
+    <main class="main">
+
+      <!-- HEADER -->
+
+      <header class="header">
+
+        <div>
+          <div class="header-title">
+            DASHBOARD
+          </div>
+
+          <div class="header-subtitle">
+            Overview
+          </div>
+        </div>
+
+
+        <div class="header-right">
+
+          <div class="secure-pill">
+            <div class="secure-pill-dot"></div>
+            Secure
+          </div>
+
+
+          <div class="notification">
+            !
+
+            <div class="notification-badge">
+              3
+            </div>
+          </div>
+
+
+          <div class="divider"></div>
+
+
+          <div class="profile">
+
+            <div class="avatar">
+              S
+            </div>
+
+            <div class="profile-text">
+
+              <div class="admin-name">
+                Super Administrator
+              </div>
+
+              <div class="admin-role">
+                System Administrator
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- DASHBOARD CONTENT -->
+
+      <section class="content">
+
+
+        <!-- ======================
+             STATS
+        ======================= -->
+
+        <div class="stats">
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Total Personnel
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              248
+            </div>
+
+            <div class="stat-subtitle">
+              All Commands
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Active Users
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              196
+            </div>
+
+            <div class="stat-subtitle">
+              Currently active
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Registered Devices
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              221
+            </div>
+
+            <div class="stat-subtitle">
+              Verified devices
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Active Channels
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              18
+            </div>
+
+            <div class="stat-subtitle">
+              Operational channels
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Security Alerts
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              3
+            </div>
+
+            <div class="stat-subtitle">
+              Requires attention
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-title">
+                Unread Messages
+              </div>
+
+              <div class="stat-icon">
+                <div class="stat-dot"></div>
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              27
+            </div>
+
+            <div class="stat-subtitle">
+              Pending messages
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ======================
+             ACTIVITY AREA
+        ======================= -->
+
+        <div class="three-column">
+
+
+          <!-- USER ACTIVITY -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+                <div class="card-title">
+                  User Activity
+                </div>
+
+                <div class="card-subtitle">
+                  Weekly system activity
+                </div>
+              </div>
+
+              <div class="view-all">
+                Last 7 Days
+              </div>
+
+            </div>
+
+
+            <div class="chart">
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 70px"
+                ></div>
+
+                <div class="day">
+                  Mon
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 105px"
+                ></div>
+
+                <div class="day">
+                  Tue
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 82px"
+                ></div>
+
+                <div class="day">
+                  Wed
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 125px"
+                ></div>
+
+                <div class="day">
+                  Thu
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 100px"
+                ></div>
+
+                <div class="day">
+                  Fri
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 60px"
+                ></div>
+
+                <div class="day">
+                  Sat
+                </div>
+              </div>
+
+
+              <div class="bar-group">
+                <div
+                  class="bar"
+                  style="height: 88px"
+                ></div>
+
+                <div class="day">
+                  Sun
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RECENT ACTIVITY -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+                <div class="card-title">
+                  Recent Activity
+                </div>
+
+                <div class="card-subtitle">
+                  Latest administrative activity
+                </div>
+              </div>
+
+              <div class="view-all">
+                View All
+              </div>
+
+            </div>
+
+
+            <div class="list">
+
+
+              <div class="list-row">
+
+                <div class="list-dot"></div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    New user created
+                  </div>
+
+                  <div class="list-description">
+                    Officer account added
+                  </div>
+
+                </div>
+
+                <div class="list-time">
+                  5 mins
+                </div>
+
+              </div>
+
+
+              <div class="list-row">
+
+                <div class="list-dot"></div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Device registered
+                  </div>
+
+                  <div class="list-description">
+                    Verified device added
+                  </div>
+
+                </div>
+
+                <div class="list-time">
+                  18 mins
+                </div>
+
+              </div>
+
+
+              <div class="list-row">
+
+                <div class="list-dot"></div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Password reset request
+                  </div>
+
+                  <div class="list-description">
+                    User requires assistance
+                  </div>
+
+                </div>
+
+                <div class="list-time">
+                  42 mins
+                </div>
+
+              </div>
+
+
+              <div class="list-row">
+
+                <div class="list-dot"></div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Failed login attempt
+                  </div>
+
+                  <div class="list-description">
+                    Multiple attempts detected
+                  </div>
+
+                </div>
+
+                <div class="list-time">
+                  1 hr
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD RESET -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Password Reset Requests
+                </div>
+
+                <div class="card-subtitle">
+                  Awaiting administrator action
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="list">
+
+
+              <div class="list-row">
+
+                <div class="reset-avatar">
+                  I
+                </div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Officer Ibrahim
+                  </div>
+
+                  <div class="list-description">
+                    APH-1028
+                  </div>
+
+                </div>
+
+                <div class="reset-actions">
+
+                  <button class="btn-outline">
+                    View
+                  </button>
+
+                  <button class="btn-black">
+                    Approve
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="list-row">
+
+                <div class="reset-avatar">
+                  D
+                </div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Officer Daniel
+                  </div>
+
+                  <div class="list-description">
+                    APH-1142
+                  </div>
+
+                </div>
+
+                <div class="reset-actions">
+
+                  <button class="btn-outline">
+                    View
+                  </button>
+
+                  <button class="btn-black">
+                    Approve
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="list-row">
+
+                <div class="reset-avatar">
+                  G
+                </div>
+
+                <div class="list-info">
+
+                  <div class="list-title">
+                    Officer Grace
+                  </div>
+
+                  <div class="list-description">
+                    APH-1265
+                  </div>
+
+                </div>
+
+                <div class="reset-actions">
+
+                  <button class="btn-outline">
+                    View
+                  </button>
+
+                  <button class="btn-black">
+                    Approve
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ======================
+             SECURITY EVENTS
+        ======================= -->
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <div>
+
+              <div class="card-title">
+                Recent Security Events
+              </div>
+
+              <div class="card-subtitle">
+                Latest security-related activity
+              </div>
+
+            </div>
+
+            <div class="view-all">
+              View All
+            </div>
+
+          </div>
+
+
+          <div class="list">
+
+
+            <div class="list-row">
+
+              <div class="security-icon">
+                !
+              </div>
+
+              <div class="list-info">
+
+                <div class="list-title">
+                  Failed login attempts
+                </div>
+
+                <div class="list-description">
+                  Multiple failed login attempts detected
+                </div>
+
+              </div>
+
+              <div class="status">
+                High
+              </div>
+
+            </div>
+
+
+            <div class="list-row">
+
+              <div class="security-icon">
+                !
+              </div>
+
+              <div class="list-info">
+
+                <div class="list-title">
+                  New device detected
+                </div>
+
+                <div class="list-description">
+                  Unrecognized device attempted authentication
+                </div>
+
+              </div>
+
+              <div class="status">
+                Medium
+              </div>
+
+            </div>
+
+
+            <div class="list-row">
+
+              <div class="security-icon">
+                !
+              </div>
+
+              <div class="list-info">
+
+                <div class="list-title">
+                  Session terminated
+                </div>
+
+                <div class="list-description">
+                  Administrator ended an active session
+                </div>
+
+              </div>
+
+              <div class="status">
+                Normal
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ======================
+             QUICK ACTIONS
+        ======================= -->
+
+        <div class="card">
+
+          <div class="card-title">
+            Quick Actions
+          </div>
+
+          <div class="card-subtitle">
+            Common administrative actions
+          </div>
+
+
+          <div class="quick-actions">
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              Create New User
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              Register Device
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              Create Channel
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              Send Signal
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              Broadcast Message
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              View Audit Logs
+            </div>
+
+
+            <div class="quick-action">
+              <div class="quick-icon">
+                +
+              </div>
+
+              System Settings
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>
