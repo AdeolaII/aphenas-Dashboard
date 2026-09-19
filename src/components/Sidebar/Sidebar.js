@@ -1,214 +1,241 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-
-
 import {
-    Image,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
-const menuSections = [
-  {
-    title: null,
-    items: [
-      {
-        name: 'Dashboard',
-        icon: 'grid-outline',
-      },
-    ],
-  },
-
-  {
-    title: 'ADMINISTRATION',
-    items: [
-      {
-        name: 'User Management',
-        icon: 'people-outline',
-      },
-      {
-        name: 'Create New User',
-        icon: 'person-add-outline',
-      },
-      {
-        name: 'Roles & Permissions',
-        icon: 'shield-checkmark-outline',
-      },
-      {
-        name: 'Units/Commands',
-        icon: 'business-outline',
-      },
-      {
-        name: 'Devices',
-        icon: 'phone-portrait-outline',
-      },
-    ],
-  },
-
-  {
-    title: 'COMMUNICATION',
-    items: [
-      {
-        name: 'Messages',
-        icon: 'chatbubble-ellipses-outline',
-      },
-      {
-        name: 'Signals',
-        icon: 'radio-outline',
-      },
-      {
-        name: 'Broadcast',
-        icon: 'megaphone-outline',
-      },
-      {
-        name: 'Channels',
-        icon: 'layers-outline',
-      },
-    ],
-  },
-
-  {
-    title: 'MONITORING',
-    items: [
-      {
-        name: 'Activity Monitor',
-        icon: 'pulse-outline',
-      },
-      {
-        name: 'Security Events',
-        icon: 'warning-outline',
-      },
-      {
-        name: 'Analytics',
-        icon: 'bar-chart-outline',
-      },
-    ],
-  },
-
-  {
-    title: 'SYSTEM',
-    items: [
-      {
-        name: 'Audit Logs',
-        icon: 'document-text-outline',
-      },
-      {
-        name: 'System Settings',
-        icon: 'settings-outline',
-      },
-    ],
-  },
-];
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Sidebar({
-  activeItem = 'Dashboard',
+  activeItem,
+  navigation,
   onNavigate,
 }) {
-  const handleNavigation = (itemName) => {
-    if (onNavigate) {
-      onNavigate(itemName);
-    }
-  };
+  const menuSections = [
+    {
+      title: 'MAIN',
+      items: [
+        {
+          name: 'Dashboard',
+          icon: 'grid-outline',
+          route: 'DashboardOverview',
+        },
+      ],
+    },
+
+    {
+      title: 'ADMINISTRATION',
+      items: [
+        {
+          name: 'Users Management',
+          icon: 'people-outline',
+          route: 'UsersManagement',
+        },
+
+        {
+          name: 'Create New User',
+          icon: 'person-add-outline',
+          route: 'CreateNewUser',
+        },
+
+        {
+          name: 'Roles & Permissions',
+          icon: 'shield-checkmark-outline',
+          route: 'RolesPermissions',
+        },
+
+        {
+          name: 'Units/Commands',
+          icon: 'business-outline',
+          route: 'UnitsCommands',
+        },
+
+        {
+          name: 'Devices',
+          icon: 'phone-portrait-outline',
+        },
+
+        {
+          name: 'Channels',
+          icon: 'layers-outline',
+        },
+      ],
+    },
+
+    {
+      title: 'COMMUNICATION',
+      items: [
+        {
+          name: 'Messages',
+          icon: 'mail-outline',
+        },
+
+        {
+          name: 'Signals',
+          icon: 'radio-outline',
+        },
+
+        {
+          name: 'Broadcast',
+          icon: 'megaphone-outline',
+        },
+      ],
+    },
+
+    {
+      title: 'MONITORING',
+      items: [
+        {
+          name: 'Activity Monitoring',
+          icon: 'pulse-outline',
+        },
+
+        {
+          name: 'Security Events',
+          icon: 'shield-outline',
+        },
+
+        {
+          name: 'Analytics',
+          icon: 'analytics-outline',
+        },
+      ],
+    },
+
+    {
+      title: 'SYSTEM',
+      items: [
+        {
+          name: 'Audit Logs',
+          icon: 'document-text-outline',
+        },
+
+        {
+          name: 'Settings',
+          icon: 'settings-outline',
+        },
+      ],
+    },
+  ];
+
+  const handlePress = (item) => {
+  console.log('Clicked:', item.name);
+  console.log('Route:', item.route);
+  console.log('Navigation:', navigation);
+
+  if (!item.route) {
+    return;
+  }
+
+  if (navigation) {
+    navigation.navigate(item.route);
+    return;
+  }
+
+  if (onNavigate) {
+    onNavigate(item.name);
+  }
+};
 
   return (
     <View style={styles.sidebar}>
-      {/* APHENAS LOGO */}
+
       <View style={styles.brandContainer}>
         <Image
-          source={require('../../../assets/images/aphenas-logo.png')}
+          source={require('../../assets/images/aphenas-logo.png')}
           style={styles.aphenasLogo}
           resizeMode="contain"
         />
       </View>
 
-      {/* SIDEBAR MENU */}
       <ScrollView
         style={styles.menuScroll}
         contentContainerStyle={styles.menuContent}
-        showsVerticalScrollIndicator={false}
       >
-        {menuSections.map((section, sectionIndex) => (
+        {menuSections.map((section) => (
           <View
-            key={`${section.title || 'main'}-${sectionIndex}`}
+            key={section.title}
             style={styles.section}
           >
-            {section.title && (
-              <Text style={styles.sectionTitle}>
-                {section.title}
-              </Text>
-            )}
+            <Text style={styles.sectionTitle}>
+              {section.title}
+            </Text>
 
-            {section.items.map((item) => {
-              const isActive = activeItem === item.name;
+            {section.items.map((item) => (
+              <Pressable
+                key={item.name}
+                onPress={() => handlePress(item)}
+                style={({ pressed }) => [
+                  styles.menuItem,
 
-              return (
-                <Pressable
-                  key={item.name}
-                  onPress={() => handleNavigation(item.name)}
-                  style={({ pressed }) => [
-                    styles.menuItem,
+                  activeItem === item.name &&
+                    styles.activeMenuItem,
 
-                    isActive &&
-                      styles.activeMenuItem,
+                  pressed &&
+                    styles.pressedMenuItem,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.menuIndicator,
 
-                    pressed &&
-                      styles.pressedMenuItem,
+                    activeItem === item.name &&
+                      styles.activeIndicator,
+                  ]}
+                />
+
+                <Ionicons
+                  name={item.icon}
+                  size={18}
+                  color={
+                    activeItem === item.name
+                      ? '#4B5320'
+                      : '#B5B5B5'
+                  }
+                  style={styles.menuIcon}
+                />
+
+                <Text
+                  style={[
+                    styles.menuText,
+
+                    activeItem === item.name &&
+                      styles.activeMenuText,
                   ]}
                 >
-                  <View
-                    style={[
-                      styles.menuIndicator,
-
-                      isActive &&
-                        styles.activeIndicator,
-                    ]}
-                  />
-
-                  <Ionicons
-                    name={item.icon}
-                    size={18}
-                    color={isActive ? '#000000' : '#B5B5B5'}
-                    style={styles.menuIcon}
-                  />
-
-                  <Text
-                    style={[
-                      styles.menuText,
-
-                      isActive &&
-                        styles.activeMenuText,
-                    ]}
-                  >
-                    {item.name}
-                  </Text>
-                </Pressable>
-              );
-            })}
+                  {item.name}
+                </Text>
+              </Pressable>
+            ))}
           </View>
         ))}
       </ScrollView>
 
-      {/* SECURITY STATUS */}
       <View style={styles.bottomSection}>
+
         <View style={styles.securityDot} />
 
         <View>
           <Text style={styles.connectionTitle}>
-            Secure Connection
+            System Connected
           </Text>
 
           <Text style={styles.connectionText}>
-            System protected
+            Secure Connection
           </Text>
         </View>
+
       </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
   sidebar: {
     width: 255,
     height: '100%',
@@ -230,6 +257,7 @@ const styles = StyleSheet.create({
   aphenasLogo: {
     width: 190,
     height: 60,
+    resizeMode: 'contain',
   },
 
   menuScroll: {
@@ -265,7 +293,7 @@ const styles = StyleSheet.create({
   },
 
   activeMenuItem: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#EEF1E6',
   },
 
   pressedMenuItem: {
@@ -276,12 +304,12 @@ const styles = StyleSheet.create({
     width: 3,
     height: 21,
     borderRadius: 4,
-    marginRight: 10,
     backgroundColor: 'transparent',
+    marginRight: 10,
   },
 
   activeIndicator: {
-    backgroundColor: '#000000',
+    backgroundColor: '#4B5320',
   },
 
   menuIcon: {
@@ -290,7 +318,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-   menuText: {
+  menuText: {
     flex: 1,
     color: '#B5B5B5',
     fontSize: 13,
@@ -298,7 +326,7 @@ const styles = StyleSheet.create({
   },
 
   activeMenuText: {
-    color: '#000000',
+    color: '#4B5320',
     fontWeight: '700',
   },
 
@@ -315,7 +343,7 @@ const styles = StyleSheet.create({
     width: 9,
     height: 9,
     borderRadius: 5,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#4B5320',
     marginRight: 10,
   },
 
@@ -330,4 +358,5 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginTop: 2,
   },
+
 });

@@ -1,195 +1,492 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import {
-    StyleSheet,
-    Text,
-    View,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
+
+
 export default function RecentSecurityEvents() {
+
+
   const events = [
+
     {
       id: '1',
-      title: 'Failed login attempts',
+      title: 'Unsuccessful login attempt',
       description: 'Multiple failed login attempts detected',
       time: '12 mins ago',
       status: 'High',
+      icon: 'warning-outline',
     },
+
+
     {
       id: '2',
-      title: 'New device detected',
-      description: 'Unrecognized device attempted authentication',
+      title: 'Untrusted device detected',
+      description: 'Unknown device attempted authentication',
       time: '38 mins ago',
       status: 'Medium',
+      icon: 'phone-portrait-outline',
     },
+
+
     {
       id: '3',
-      title: 'Session terminated',
-      description: 'Administrator ended an active user session',
+      title: 'Multiple failed login attempts',
+      description: 'Multiple authentication failures detected',
+      time: '1 hr ago',
+      status: 'High',
+      icon: 'alert-circle-outline',
+    },
+
+
+    {
+      id: '4',
+      title: 'Password reset request',
+      description: 'User requested password assistance',
       time: '1 hr ago',
       status: 'Normal',
+      icon: 'key-outline',
     },
+
+
+    {
+      id: '5',
+      title: 'New device registered',
+      description: 'A new verified device was added',
+      time: '2 hrs ago',
+      status: 'Normal',
+      icon: 'phone-portrait-outline',
+    },
+
   ];
 
+
+
+  const getStatusStyle = (status) => {
+
+    if (status === 'High') {
+
+      return {
+
+        backgroundColor: '#FDECEC',
+
+        color: '#B42318',
+
+      };
+
+    }
+
+
+    if (status === 'Medium') {
+
+      return {
+
+        backgroundColor: '#FFF4E5',
+
+        color: '#C28A00',
+
+      };
+
+    }
+
+
+    return {
+
+      backgroundColor: '#EEF1E6',
+
+      color: '#4B5320',
+
+    };
+
+  };
+
+
+
   return (
+
     <View style={styles.card}>
+
+
       <View style={styles.header}>
+
+
         <View>
+
+
           <Text style={styles.title}>
-            Recent Security Events
+            Security Events (Recent)
           </Text>
+
 
           <Text style={styles.subtitle}>
             Latest security-related activity
           </Text>
+
+
         </View>
+
+
 
         <Text style={styles.viewAll}>
           View All
         </Text>
+
+
+
       </View>
 
+
+
+
+
       <View style={styles.list}>
-        {events.map((event, index) => (
+
+
+        {events.map((event,index)=>(
+
+
           <View
+
             key={event.id}
+
             style={[
+
               styles.eventRow,
+
               index !== events.length - 1 &&
-                styles.eventBorder,
+              styles.eventBorder
+
             ]}
+
           >
-            <View style={styles.eventIcon}>
-              <Text style={styles.eventIconText}>
-                !
-              </Text>
+
+
+
+            <View style={styles.eventIconBox}>
+
+
+              <Ionicons
+
+                name={event.icon}
+
+                size={16}
+
+                color="#000000"
+
+              />
+
+
             </View>
 
+
+
+
+
             <View style={styles.eventContent}>
+
+
               <Text style={styles.eventTitle}>
                 {event.title}
               </Text>
+
+
 
               <Text style={styles.eventDescription}>
                 {event.description}
               </Text>
 
+
+
               <Text style={styles.eventTime}>
                 {event.time}
               </Text>
+
+
+
             </View>
 
-            <View style={styles.statusBadge}>
-              <Text style={styles.statusText}>
+
+
+
+
+            <View
+
+              style={[
+
+                styles.statusBadge,
+
+                {
+
+                  backgroundColor:
+                  getStatusStyle(event.status)
+                  .backgroundColor
+
+                }
+
+              ]}
+
+            >
+
+
+              <Text
+
+                style={[
+
+                  styles.statusText,
+
+                  {
+
+                    color:
+                    getStatusStyle(event.status)
+                    .color
+
+                  }
+
+                ]}
+
+              >
+
                 {event.status}
+
               </Text>
+
+
             </View>
+
+
+
           </View>
+
+
         ))}
+
+
+
       </View>
+
+
+
     </View>
+
   );
+
 }
 
+
+
+
 const styles = StyleSheet.create({
+
+
   card: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#E2E2E2',
-    borderRadius: 12,
-    padding: 20,
+
+    flex:1,
+
+    minHeight:290,
+
+    backgroundColor:'#FFFFFF',
+
+    borderWidth:1,
+
+    borderColor:'#E5E7EB',
+
+    borderRadius:12,
+
+    padding:20,
+
   },
 
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
+
+
+  header:{
+
+
+    flexDirection:'row',
+
+    justifyContent:'space-between',
+
+    alignItems:'flex-start',
+
   },
 
-  title: {
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: '700',
+
+
+  title:{
+
+
+    color:'#111111',
+
+    fontSize:15,
+
+    fontWeight:'700',
+
   },
 
-  subtitle: {
-    marginTop: 4,
-    color: '#8A8A8A',
-    fontSize: 10,
+
+
+  subtitle:{
+
+
+    marginTop:4,
+
+    color:'#777777',
+
+    fontSize:10,
+
   },
 
-  viewAll: {
-    color: '#000000',
-    fontSize: 10,
-    fontWeight: '700',
+
+
+  viewAll:{
+
+
+    color:'#000000',
+
+    fontSize:10,
+
+    fontWeight:'700',
+
   },
 
-  list: {
-    marginTop: 18,
+
+
+  list:{
+
+
+    marginTop:18,
+
   },
 
-  eventRow: {
-    minHeight: 76,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
+
+
+  eventRow:{
+
+
+    minHeight:65,
+
+    flexDirection:'row',
+
+    alignItems:'flex-start',
+
+    paddingVertical:12,
+
   },
 
-  eventBorder: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEEEEE',
+
+
+  eventBorder:{
+
+
+    borderBottomWidth:1,
+
+    borderBottomColor:'#E5E7EB',
+
   },
 
-  eventIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
+
+
+  eventIconBox:{
+
+
+    width:28,
+
+    height:28,
+
+    borderRadius:7,
+
+    backgroundColor:'#F2F2F2',
+
+    alignItems:'center',
+
+    justifyContent:'center',
+
+    marginRight:12,
+
+    marginTop:2,
+
   },
 
-  eventIconText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '800',
+
+
+  eventContent:{
+
+
+    flex:1,
+
+    paddingTop:1,
+
   },
 
-  eventContent: {
-    flex: 1,
-    paddingRight: 15,
+
+
+  eventTitle:{
+
+
+    color:'#111111',
+
+    fontSize:11,
+
+    fontWeight:'700',
+
   },
 
-  eventTitle: {
-    color: '#000000',
-    fontSize: 11,
-    fontWeight: '700',
+
+
+  eventDescription:{
+
+
+    marginTop:3,
+
+    color:'#777777',
+
+    fontSize:9,
+
   },
 
-  eventDescription: {
-    marginTop: 3,
-    color: '#777777',
-    fontSize: 9,
+
+
+  eventTime:{
+
+
+    marginTop:3,
+
+    color:'#999999',
+
+    fontSize:8,
+
   },
 
-  eventTime: {
-    marginTop: 4,
-    color: '#999999',
-    fontSize: 8,
+
+
+  statusBadge:{
+
+
+    paddingHorizontal:10,
+
+    paddingVertical:5,
+
+    borderRadius:12,
+
+    marginLeft:8,
+
+    marginTop:3,
+
   },
 
-  statusBadge: {
-    borderWidth: 1,
-    borderColor: '#000000',
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+
+
+  statusText:{
+
+
+    fontSize:9,
+
+    fontWeight:'700',
+
   },
 
-  statusText: {
-    color: '#000000',
-    fontSize: 8,
-    fontWeight: '700',
-  },
+
 });

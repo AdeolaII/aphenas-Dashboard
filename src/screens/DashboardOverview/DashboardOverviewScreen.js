@@ -1,9 +1,8 @@
-
 import {
-    ScrollView,
-    StyleSheet,
-    View,
-    useWindowDimensions,
+  ScrollView,
+  StyleSheet,
+  View,
+  useWindowDimensions,
 } from 'react-native';
 
 import Header from '../../components/Header/Header';
@@ -16,14 +15,10 @@ import RecentActivity from './components/RecentActivity';
 import RecentSecurityEvents from './components/RecentSecurityEvents';
 import UserActivity from './components/UserActivity';
 
-export default function DashboardOverviewScreen() {
+export default function DashboardOverviewScreen({ navigation }) {
   const { width } = useWindowDimensions();
 
   const isSmallScreen = width < 1200;
-
-  const handleSidebarNavigation = (item) => {
-    console.log('Navigate to:', item);
-  };
 
   const handleQuickAction = (action) => {
     console.log('Quick action:', action);
@@ -31,12 +26,14 @@ export default function DashboardOverviewScreen() {
 
   return (
     <View style={styles.container}>
+
       <Sidebar
         activeItem="Dashboard"
-        onNavigate={handleSidebarNavigation}
+        navigation={navigation}
       />
 
       <View style={styles.mainContent}>
+
         <Header
           title="DASHBOARD"
           subtitle="Overview"
@@ -50,6 +47,7 @@ export default function DashboardOverviewScreen() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
+
           <DashboardStats />
 
           <View
@@ -59,6 +57,7 @@ export default function DashboardOverviewScreen() {
                 styles.activitySectionSmall,
             ]}
           >
+
             <View style={styles.activityLarge}>
               <UserActivity />
             </View>
@@ -70,6 +69,7 @@ export default function DashboardOverviewScreen() {
             <View style={styles.activityMedium}>
               <PasswordResetRequests />
             </View>
+
           </View>
 
           <RecentSecurityEvents />
@@ -79,13 +79,17 @@ export default function DashboardOverviewScreen() {
           />
 
           <View style={styles.bottomSpacing} />
+
         </ScrollView>
+
       </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
   activitySection: {
     width: '100%',
     flexDirection: 'row',
-    alignItems: 'stretch',
+    alignItems: 'flex-start',
     gap: 15,
   },
 
@@ -122,14 +126,17 @@ const styles = StyleSheet.create({
   activityLarge: {
     flex: 1.3,
     minWidth: 300,
+    minHeight: 390,
   },
 
   activityMedium: {
     flex: 1,
     minWidth: 280,
+    minHeight: 390,
   },
 
   bottomSpacing: {
     height: 20,
   },
+
 });
