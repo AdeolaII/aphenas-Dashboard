@@ -6,6 +6,7 @@ import SplashScreen from '../screens/SplashScreen/SplashScreen';
 
 import CreateNewUserScreen from '../screens/CreateNewUserScreen/CreateNewUserScreen';
 import DashboardOverviewScreen from '../screens/DashboardOverview/DashboardOverviewScreen';
+import DevicesScreen from '../screens/Devices/DevicesScreen';
 import RolesPermissionsScreen from '../screens/RolesPermissions/RolesPermissionsScreen';
 import UnitsCommandsScreen from '../screens/UnitCommand/UnitsCommandsScreen';
 import UsersManagementScreen from '../screens/UsersManagement/UsersManagementScreen';
@@ -61,6 +62,12 @@ export default function AppNavigator() {
         <Stack.Screen
           name="UnitsCommands"
           component={UnitsCommandsScreen}
+        />
+
+        {/* DEVICES */}
+        <Stack.Screen
+          name="Devices"
+          component={DevicesScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

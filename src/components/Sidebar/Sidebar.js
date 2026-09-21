@@ -56,6 +56,7 @@ export default function Sidebar({
         {
           name: 'Devices',
           icon: 'phone-portrait-outline',
+          route: 'Devices',
         },
 
         {
